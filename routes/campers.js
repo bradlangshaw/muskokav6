@@ -148,7 +148,7 @@ router.post('/edit/:_id', upload.single('editCamperProfileImg'), isLoggedIn, fun
         lastName: req.body.lastName,
         age: req.body.age,
         note: req.body.note,
-        fileupload: "null",
+        fileupload: Camper.fileupload,
         parentFirstName: req.body.parentFirstName,
         parentLastName: req.body.parentLastName,
         phoneNum: req.body.phoneNum,
