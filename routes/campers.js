@@ -19,7 +19,7 @@ function isLoggedIn(req, res, next) {
 
 
 /* GET staff-camper-profiles page. */
-router.get('/staff-camper-profiles', function(req, res, next) {
+router.get('/staff-camper-profiles', isLoggedIn, function(req, res, next) {
 
     Camper.find(function(err, queryResults){
         if (err){
@@ -43,14 +43,14 @@ router.get('/staff-camper-profiles', function(req, res, next) {
 // new require('mongodb').ObjectID(req.params.id)
 
 /* GET single camper profile page. */
-router.get('/single-camper-profile', function(req, res, next) {
+router.get('/single-camper-profile', isLoggedIn, function(req, res, next) {
             res.render('single-camper-profile', { title:'Camper Profile'});
         });
 
 
 
 //add camper
-router.get('/add-camper', function(req, res, next){
+router.get('/add-camper', isLoggedIn, function(req, res, next){
     res.render('add-camper', { title:'Add camper'});
 });
 
@@ -83,7 +83,7 @@ router.post('/add-camper', upload.single('camperProfileImg'), isLoggedIn, functi
 
 
 /* GET camp-detail page. */
-router.get('/camp-detail', function(req, res, next) {
+router.get('/camp-detail', isLoggedIn, function(req, res, next) {
 
     Camper.find(function(err, queryResults){
         if (err){
@@ -104,7 +104,7 @@ router.get('/camp-detail', function(req, res, next) {
 
 
 //GET /_id show single camper profile
-router.get('/profile/:_id', function(req, res, next) {
+router.get('/profile/:_id', isLoggedIn, function(req, res, next) {
     // look at the selected camper
     Camper.findById(req.params._id, function (err, camper) {
         if (err) {
@@ -122,7 +122,7 @@ router.get('/profile/:_id', function(req, res, next) {
 
 
 //GET /edit/_id show edit form
-router.get('/edit/:_id', function(req, res, next) {
+router.get('/edit/:_id', isLoggedIn, function(req, res, next) {
    // look at the selected camper
     Camper.findById(req.params._id, function (err, camper) {
         if (err) {
@@ -140,7 +140,30 @@ router.get('/edit/:_id', function(req, res, next) {
 //POST /_id to save updates
 router.post('/edit/:_id', upload.single('editCamperProfileImg'), isLoggedIn, function(req, res, next) {
     // create an fill a camper object)
+
+    if (typeof req.file == 'undefined'){
     let camper = new Camper({
+        _id: req.params._id,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        age: req.body.age,
+        note: req.body.note,
+        fileupload: "null",
+        parentFirstName: req.body.parentFirstName,
+        parentLastName: req.body.parentLastName,
+        phoneNum: req.body.phoneNum,
+        address: req.body.address,
+        email: req.body.email
+    });
+        Camper.update({ _id: req.params._id }, camper, function(err) {
+        if (err) {
+            console.log(err);
+            res.render('error');
+            return;
+        }
+        res.redirect('/staff-camper-profiles')
+    });}else{
+         let camper = new Camper({
         _id: req.params._id,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -152,10 +175,7 @@ router.post('/edit/:_id', upload.single('editCamperProfileImg'), isLoggedIn, fun
         phoneNum: req.body.phoneNum,
         address: req.body.address,
         email: req.body.email
-    });
-
-    //call mongoose update method, passing the id and then the updated camper
-
+  });
     Camper.update({ _id: req.params._id }, camper, function(err) {
         if (err) {
             console.log(err);
@@ -163,12 +183,14 @@ router.post('/edit/:_id', upload.single('editCamperProfileImg'), isLoggedIn, fun
             return;
         }
         res.redirect('/staff-camper-profiles')
-    })
+    });}
+    //call mongoose update method, passing the id and then the updated camper
+
 
 });
 
 //GET /camper-delete/_id to delete the camper
-router.get('/camper-delete/:_id', function(req, res, next) {
+router.get('/camper-delete/:_id', isLoggedIn, function(req, res, next) {
     //delete a camper and redirect
     Camper.remove({ _id: req.params._id }, function(err) {
         if (err) {
