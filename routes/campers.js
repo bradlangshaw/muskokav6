@@ -58,7 +58,30 @@ router.get('/add-camper', isLoggedIn, function(req, res, next){
 /// POST /add-camper
 router.post('/add-camper', upload.single('camperProfileImg'), isLoggedIn, function(req, res, next) {
     // use the camper model to add a new camper to mongodb
+   if (typeof req.file == 'undefined'){
     Camper.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        age: req.body.age,
+        note: req.body.note,
+        fileupload: "null",
+        parentFirstName:req.body.parentFirstName,
+        parentLastName: req.body.parentLastName,
+        phoneNum: req.body.phoneNum,
+        address: req.body.address,
+        email: req.body.email,
+        pin: req.body.pin,
+        signIn: 0
+    },function(err) {
+        if (err) {
+            console.log(err);
+            res.render('error');
+            return;
+        }
+
+        res.redirect('staff-camper-profiles');
+    });}else{
+          Camper.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         age: req.body.age,
@@ -68,7 +91,9 @@ router.post('/add-camper', upload.single('camperProfileImg'), isLoggedIn, functi
         parentLastName: req.body.parentLastName,
         phoneNum: req.body.phoneNum,
         address: req.body.address,
-        email: req.body.email
+        email: req.body.email,
+        pin: req.body.pin,
+        signIn: 0
     },function(err) {
         if (err) {
             console.log(err);
@@ -78,6 +103,7 @@ router.post('/add-camper', upload.single('camperProfileImg'), isLoggedIn, functi
 
         res.redirect('staff-camper-profiles');
     });
+    }
 });
 
 
@@ -153,7 +179,9 @@ router.post('/edit/:_id', upload.single('editCamperProfileImg'), isLoggedIn, fun
         parentLastName: req.body.parentLastName,
         phoneNum: req.body.phoneNum,
         address: req.body.address,
-        email: req.body.email
+        email: req.body.email,
+        pin: req.body.pin,
+        signIn: Camper.signIn
     });
         Camper.update({ _id: req.params._id }, camper, function(err) {
         if (err) {
@@ -174,7 +202,9 @@ router.post('/edit/:_id', upload.single('editCamperProfileImg'), isLoggedIn, fun
         parentLastName: req.body.parentLastName,
         phoneNum: req.body.phoneNum,
         address: req.body.address,
-        email: req.body.email
+        email: req.body.email,
+        pin: req.body.pin,
+        signIn: Camper.signIn
   });
     Camper.update({ _id: req.params._id }, camper, function(err) {
         if (err) {

@@ -5,6 +5,8 @@ var router = express.Router();
 let passport = require('passport');
 let Account = require('../models/accountStaff');
 
+let Camper = require('../models/camper');
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Welcome to the one-of-a-kind Muskoka Discovery Centre' });
@@ -18,6 +20,36 @@ router.get('/staff-dashboard', function(req, res, next){
 // child-login
 router.get('/child-login', function(req, res, next){
   res.render('child-login', { title:'Please sign-in your child'});
+
+
+});
+router.get('/child-login', function(req, res, next){
+       Camper.find(req.body.pin, function (err, camper) {
+        if (err) {
+            console.log(err);
+            res.render('error');
+            return;
+        }
+           res.render('child-login', {
+            Camper: camper
+        });
+  });
+});
+router.post('/child-login', function(req, res, next){
+      var pin = req.params.pin
+      let camper = new Camper({
+        pin: camper.pin,
+        signIn: "1"
+      });
+      Camper.update({ pin: req.params.pin }, camper, function(err) {
+        if (err) {
+            console.log(err);
+            res.render('error');
+            return;
+        }
+        
+      });
+
 });
 
 //child-signout

@@ -2,19 +2,16 @@
 
     <h1 class="text-center"><%= title %></h1>
 
-    <form method="post">
+    <form method="get">
       <div class="form-group">
         <div class="block">
-            <input type="text" class="form-control" placeholder="First name" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" id="pin" name="pin" placeholder="4 digit PIN # Linked with your child" aria-describedby="basic-addon1">
         </div>
-    <br/>
-      <div class="block">
-        <input type="text" class="form-control" placeholder="Last name" aria-describedby="basic-addon1">
+        <% if(typeof Camper != 'undefined'){ %>
+        <%= Camper.email %>
+        <% } %>
       </div>
-      </div>
-
-      </div>
-       <button id="success" type="button" class="btn btn-primary">Add a child</button>
+       <button id="signinchild" type="button" class="btn btn-primary">Sign In Chld</button>
        <br>
        <a href="/">Return to homepage</a>
     </form>

@@ -41,6 +41,12 @@ address:{
     },
 email: {
   type: String
+},
+pin:{
+  type: Number
+},
+signIn: {
+  type: String
 }
 
 });

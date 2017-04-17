@@ -26,6 +26,7 @@
     <tr>
         <th class="text-center">First Name</th>
         <th class="text-center">Last Name</th>
+        <th class="text-center"> Signed In?
         <th class="text-center">Profile</th>
         <th class="text-center">Actions</th>
     </tr>
@@ -33,7 +34,10 @@
     <tr>
         <td><%= camper[i].firstName %></td>
         <td><%= camper[i].lastName %></td>
-
+        <td class="text-center"><% if(camper[i].signIn != "0") { %>
+            <div class="glyphicon glyphicon-ok"></div>
+        <% } %> 
+        </td>
 
 
         <td class="text-center"><a href="/profile/<%= camper[i]._id %>"><img src="../images/icons/profile.png"></a></td>
