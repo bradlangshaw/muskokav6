@@ -1,6 +1,6 @@
 <% include ./partials/header.ejs %>
 
-
+<a href="/staff-logout" role="button" class="btn btn-primary pull-right">Logout</a>
   <h1 class="text-center"><%= title %></h1>
 
   <ul class="nav nav-tabs">
@@ -19,8 +19,17 @@
   </ul>
 
   <br>
+
+  <img src="images/newicons/archieve.png" height="50" width="50">
+  <a href="/staff-camp-archive">DAILY CAMPER ARCHIVE</a><br>
+  <br>
+  <img src="images/newicons/report.png" height="50" width="50">
+  <a href="/staff-signinOut-reports">PARENT SIGN IN / OUT REPORTS</a><br>
+<br>
+<img src="images/newicons/stats.ico" height="50" width="50">
+<a href="/camper-reports#">Stats</a><br>
+<br>
 <a href="/staff-dashboard"  role="button" class="btn btn-primary" >Return to Dashboard</a>
 
-<a href="/staff-logout" role="button" class="btn btn-primary">Logout</a>
 
 <% include ./partials/footer.ejs %>

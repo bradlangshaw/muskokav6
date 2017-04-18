@@ -5,13 +5,13 @@
     <form method="get">
       <div class="form-group">
         <div class="block">
-            <input type="text" class="form-control" id="pin" name="pin" placeholder="4 digit PIN # Linked with your child" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" id="pin" name="pin" class="form-control input pass" placeholder="4 digit PIN # Linked with your child" aria-describedby="basic-addon1">
         </div>
         <% if(typeof Camper != 'undefined'){ %>
         <%= Camper.email %>
         <% } %>
       </div>
-       <button id="signinchild" type="button" class="btn btn-primary">Sign In Chld</button>
+       <button id="signinchild" type="button" class="inputButton">Sign In Chld</button>
        <br>
        <a href="/">Return to homepage</a>
     </form>
